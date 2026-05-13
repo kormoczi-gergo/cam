@@ -4,6 +4,10 @@ import time
 import threading# for multi threading
 from PIL import Image, ImageTk # for tasks with images
 import socket
+import server_send
+
+
+
 
 frame_counter = 0
 
@@ -35,6 +39,8 @@ def record_flow(cam, image_list):
 #################
 # sender connects to server
 def connect_to_server_flow():
+
+    server_send.main()
     # 1. Create the socket
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -51,6 +57,11 @@ def connect_to_server_flow():
 
 
 def main():
+
+    server_send.main()
+
+
+    
     ### CAMERA OBJECT ###
     camera = cv2.VideoCapture(0)    # open default webcam (0)
     if not camera.isOpened():       #catch error

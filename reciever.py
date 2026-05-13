@@ -3,8 +3,7 @@ import tkinter  # ui
 import time
 import threading# for multi threading
 from PIL import Image, ImageTk # for tasks with images
-import socket  
-
+import server_host_recieve # script that runs the server , recieves images, 1.arg: imagelise( first elements is changed to recieved image)
 
 
 frame_counter = 0
@@ -69,36 +68,14 @@ def tkinter_ui_flow(image_list):
 
 
 
+
+
 #################
 #  SERVER FLOW  #
 #################
 #reciever hosts the server
 def host_server(image_list):
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-
-
-    server_socket.bind(('0.0.0.0', 5005)) #listen to any incoming connection
-    server_socket.listen(1)
-    #start listening
-    print(f"IP: {server_socket.getsockname()[0]}")
-    print("Server is listening on port 5005...")
-
-    # 4. Accept a connection
-    conn, addr = server_socket.accept()
-    print(f"Connected by {addr}")
-
-    # 5. Receive data
-    data = conn.recv(1024)
-    print(f"Received message: {data.decode('utf-8')}")
-
-
-
-    # 6. Close
-    conn.close()
-    server_socket.close()
-
-
+    server_host_recieve.main(image_list)
 
 
 
