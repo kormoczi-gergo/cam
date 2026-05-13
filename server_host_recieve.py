@@ -4,7 +4,7 @@ import struct
 import numpy as np
 import cv2
 
-def main(recorded_image_pointer):
+def main(recorded_image_pointer: list):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     os.system("hostname -I") # starting output
@@ -37,7 +37,7 @@ def main(recorded_image_pointer):
 
         # 1. Get the header
         while len(data) < payload_size:
-            data += server_socket.recv(4096)
+            data += conn.recv(4096)
 
         packed_msg_size = data[:payload_size]
         data = data[payload_size:]
@@ -46,7 +46,7 @@ def main(recorded_image_pointer):
 
         # 2. Get the full image data
         while len(data) < msg_size:
-            data += server_socket.recv(4096)
+            data += conn.recv(4096)
 
 
 

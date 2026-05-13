@@ -101,7 +101,7 @@ def main():
 
     ### THREAD 1 ###
     # server flow on a seperate thread
-    thread1 = threading.Thread(target=host_server, args=(recieved_image_pointer), daemon=True) #daemon true, so if tkinter stops, it immediatly stops this thread
+    thread1 = threading.Thread(target=host_server, args=(recieved_image_pointer, ), daemon=True) #daemon true, so if tkinter stops, it immediatly stops this thread
     thread1.start()
 
 

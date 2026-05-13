@@ -9,7 +9,8 @@ def main(recieved_image_pointer):
 
     # 2. Connect to the Server's IP
     # Replace '192.168.1.XX' with the actual IP of the Host laptop
-    client_socket.connect(('192.168.0.44', 5005))
+    ip_address = input("address of computer:")
+    client_socket.connect((ip_address, 5005))
 
     # 3. Send data 
     while True:
