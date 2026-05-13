@@ -41,6 +41,8 @@ def record_flow(cam, image_list):
 def connect_to_server_flow():
 
     server_send.main()
+
+
     # 1. Create the socket
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
