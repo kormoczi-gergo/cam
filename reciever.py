@@ -16,10 +16,10 @@ frame_counter = 0
 
 
 ### DEFS FOR TKINTER
-def update_main_image(image_list, root, canvas):
+def update_main_image(recieved_image_pointer, root, canvas):
     global frame_counter
 
-    latest_image = image_list[0]
+    latest_image = recieved_image_pointer[0]
 
     if latest_image is not None: # if image1 exists draw it on the canvas
         # 1. Convert BGR to RGB
@@ -37,12 +37,12 @@ def update_main_image(image_list, root, canvas):
         frame_counter += 1
 
     if root is not None:    # connect image updating to tkinter loop
-        root.after(60, update_main_image, image_list, root, canvas) # 60 = 15fps
+        root.after(60, update_main_image, recieved_image_pointer, root, canvas) # 60 = 15fps
 
 
 ##### MAIN TKINTER FLOW #####
 
-def tkinter_ui_flow(image_list):
+def tkinter_ui_flow(recieved_image_pointer):
     ### UI ###
     # 1. Initialize the main window
     root = tkinter.Tk()
@@ -60,7 +60,7 @@ def tkinter_ui_flow(image_list):
 
     # 4. The Main Loop
     # This is a blocking call that keeps the window open and responsive
-    update_main_image(image_list, root, canvas) # start update loop
+    update_main_image(recieved_image_pointer, root, canvas) # start update loop
     root.mainloop()
 
 
@@ -74,8 +74,8 @@ def tkinter_ui_flow(image_list):
 #  SERVER FLOW  #
 #################
 #reciever hosts the server
-def host_server(image_list):
-    server_host_recieve.main(image_list)
+def host_server(recieved_image_pointer):
+    server_host_recieve.main(recieved_image_pointer)
 
 
 
@@ -85,7 +85,7 @@ def host_server(image_list):
 
 def main():
 
-    
+
     ### CAMERA OBJECT ###
     camera = cv2.VideoCapture(0)    # open default webcam (0)
     if not camera.isOpened():       #catch error
@@ -95,20 +95,20 @@ def main():
 
 
     ### STRONING IMAGE/S IN ARRAY ###
-    image_list = [None]
+    recieved_image_pointer = [None]
     #array so it is a pointer, and dinamically changes no matter the scope, [0]: main image
 
 
     ### THREAD 1 ###
     # server flow on a seperate thread
-    thread1 = threading.Thread(target=host_server, args=(image_list), daemon=True) #daemon true, so if tkinter stops, it immediatly stops this thread
+    thread1 = threading.Thread(target=host_server, args=(recieved_image_pointer), daemon=True) #daemon true, so if tkinter stops, it immediatly stops this thread
     thread1.start()
 
 
     ### THREAD main ###
     # run tkinter ui flow on main thread
     # passing the pointer to images, so it can access it
-    tkinter_ui_flow(image_list)
+    tkinter_ui_flow(recieved_image_pointer)
 
 
 

@@ -2,7 +2,7 @@ import socket
 import os
 
 
-def main(image_list):
+def main(recorded_image_pointer):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     os.system("hostname -I") # starting output

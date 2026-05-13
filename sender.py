@@ -26,11 +26,11 @@ def take_image(cam):
 
 
 ##### MAIN IMAGE RECORDING FLOW #####
-def record_flow(cam, image_list):
+def record_flow(cam, recorded_image_pointer):
         # cam is the object that takes photos
         # image1 is inputted so it can be changed
         while True:
-            image_list[0] = take_image(cam)
+            recorded_image_pointer[0] = take_image(cam)
 
 
 
@@ -43,19 +43,6 @@ def connect_to_server_flow():
     server_send.main()
 
 
-    # 1. Create the socket
-    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    # 2. Connect to the Server's IP
-    # Replace '192.168.1.XX' with the actual IP of the Host laptop
-    client_socket.connect(('192.168.1.XX', 5005))
-
-    # 3. Send data (Must be bytes!)
-    message = "Motion Detected!"
-    client_socket.send(message.encode('utf-8'))
-
-    # 4. Close
-    client_socket.close()
 
 
 def main():
@@ -72,19 +59,19 @@ def main():
     ##########
 
     ### STRONING IMAGE/S IN ARRAY ###
-    image_list = [None]
+    recorded_image_pointer = [None]
     #array so it is a pointer, and dinamically changes no matter the scope, [0]: main image
 
     ### THREAD 1 ###
     # run image_recording flow on a seperate thread
-    thread1 = threading.Thread(target=connect_to_server_flow, args=(camera, image_list), daemon=True) #daemon true, so if tkinter stops, it immediatly stops this thread
+    thread1 = threading.Thread(target=record_flow, args=(camera, recorded_image_pointer), daemon=True) #daemon true, so if tkinter stops, it immediatly stops this thread
     thread1.start()
 
     ### THREAD main ###
     # run image_taker flow on main thread
     # passing the pointer to images, so it can access it
     
-    record_flow(image_list)
+    connect_to_server_flow(recorded_image_pointer)
 
 
 
