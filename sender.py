@@ -47,8 +47,6 @@ def connect_to_server_flow():
 
 def main():
 
-    server_send.main()
-
 
     
     ### CAMERA OBJECT ###
