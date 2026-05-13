@@ -15,20 +15,21 @@ def main(recieved_image_pointer):
     while True:
         frame = recieved_image_pointer[0] #get most recent photo done by camera
 
+        if frame is not None:
 
 
 
-        # 1. Encode the frame
-        # '.jpg' is the format, 90 is the quality (1-100)
-        result, encoded_img = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
-        data = encoded_img.tobytes()
+            # 1. Encode the frame
+            # '.jpg' is the format, 90 is the quality (1-100)
+            result, encoded_img = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
+            data = encoded_img.tobytes()
 
-        # 2. Pack the length of data into 4 bytes (L = unsigned long)
-        size_header = struct.pack(">L", len(data))
+            # 2. Pack the length of data into 4 bytes (L = unsigned long)
+            size_header = struct.pack(">L", len(data))
 
 
-        # 3. Send everything
-        client_socket.sendall(size_header + data)
+            # 3. Send everything
+            client_socket.sendall(size_header + data)
 
 
 
