@@ -11,8 +11,9 @@ def main(recieved_image_pointer):
     client_socket.connect(('192.168.0.44', 5005))
 
     # 3. Send data (Must be bytes!)
-    message = "Motion Detected!"
-    client_socket.send(message.encode('utf-8'))
+    while True:
+        message = input(":::: ")
+        client_socket.send(message.encode('utf-8'))
 
     # 4. Close
     client_socket.close()
