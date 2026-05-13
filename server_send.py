@@ -1,5 +1,6 @@
 import socket
-
+import struct
+import cv2
 
 
 def main(recieved_image_pointer):
@@ -10,10 +11,28 @@ def main(recieved_image_pointer):
     # Replace '192.168.1.XX' with the actual IP of the Host laptop
     client_socket.connect(('192.168.0.44', 5005))
 
-    # 3. Send data (Must be bytes!)
+    # 3. Send data 
     while True:
-        message = input(":::: ")
-        client_socket.send(message.encode('utf-8'))
+        frame = recieved_image_pointer[0] #get most recent photo done by camera
+
+
+
+
+        # 1. Encode the frame
+        # '.jpg' is the format, 90 is the quality (1-100)
+        result, encoded_img = cv2.imencode('.jpg', frame, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
+        data = encoded_img.tobytes()
+
+        # 2. Pack the length of data into 4 bytes (L = unsigned long)
+        size_header = struct.pack(">L", len(data))
+
+
+        # 3. Send everything
+        client_socket.sendall(size_header + data)
+
+
+
+
 
     # 4. Close
     client_socket.close()

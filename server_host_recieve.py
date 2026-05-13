@@ -1,6 +1,8 @@
 import socket
 import os
-
+import struct
+import numpy as np
+import cv2
 
 def main(recorded_image_pointer):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -19,10 +21,45 @@ def main(recorded_image_pointer):
     conn, addr = server_socket.accept()
     print(f"Connected by {addr}")
 
+
+
+
+
+    payload_size = struct.calcsize(">L")
+    data = b""
+
     while True:
-        # 5. Receive data
-        data = conn.recv(1024)
-        print(f"Received message: {data.decode('utf-8')}")
+
+
+
+
+
+
+        # 1. Get the header
+        while len(data) < payload_size:
+            data += server_socket.recv(4096)
+
+        packed_msg_size = data[:payload_size]
+        data = data[payload_size:]
+        msg_size = struct.unpack(">L", packed_msg_size)[0]
+
+
+        # 2. Get the full image data
+        while len(data) < msg_size:
+            data += server_socket.recv(4096)
+
+
+
+        frame_data = data[:msg_size]
+        data = data[msg_size:]
+
+
+        # 3. Convert back to NumPy array
+        nparr = np.frombuffer(frame_data, np.uint8)
+        frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+
+        recorded_image_pointer[0] = frame
 
 
 
