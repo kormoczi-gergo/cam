@@ -84,6 +84,8 @@ def host_server(image_list):
     
 
 def main():
+
+    
     ### CAMERA OBJECT ###
     camera = cv2.VideoCapture(0)    # open default webcam (0)
     if not camera.isOpened():       #catch error
@@ -91,14 +93,17 @@ def main():
         return
     ##########
 
+
     ### STRONING IMAGE/S IN ARRAY ###
     image_list = [None]
     #array so it is a pointer, and dinamically changes no matter the scope, [0]: main image
+
 
     ### THREAD 1 ###
     # server flow on a seperate thread
     thread1 = threading.Thread(target=host_server, args=(image_list), daemon=True) #daemon true, so if tkinter stops, it immediatly stops this thread
     thread1.start()
+
 
     ### THREAD main ###
     # run tkinter ui flow on main thread

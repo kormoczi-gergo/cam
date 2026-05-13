@@ -81,9 +81,10 @@ def main():
     thread1.start()
 
     ### THREAD main ###
-    # run tkinter ui flow on main thread
+    # run image_taker flow on main thread
     # passing the pointer to images, so it can access it
     
+    record_flow(image_list)
 
 
 
