@@ -38,9 +38,9 @@ def record_flow(cam, recorded_image_pointer):
 #  SERVER FLOW  #
 #################
 # sender connects to server
-def connect_to_server_flow():
+def connect_to_server_flow(recorded_image_pointer):
 
-    server_send.main()
+    server_send.main(recorded_image_pointer)
 
 
 
