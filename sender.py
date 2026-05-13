@@ -34,6 +34,13 @@ def record_flow(cam, recorded_image_pointer):
 
 
 
+
+
+
+
+
+
+
 #################
 #  SERVER FLOW  #
 #################
@@ -45,10 +52,14 @@ def connect_to_server_flow(recorded_image_pointer):
 
 
 
+
+
+
+
+
 def main():
 
 
-    
     ### CAMERA OBJECT ###
     camera = cv2.VideoCapture(0)    # open default webcam (0)
     if not camera.isOpened():       #catch error
@@ -56,17 +67,26 @@ def main():
         return
     ##########
 
+
+
+
     ### STRONING IMAGE/S IN ARRAY ###
     recorded_image_pointer = [None]
     #array so it is a pointer, and dinamically changes no matter the scope, [0]: main image
+
+
+
 
     ### THREAD 1 ###
     # run image_recording flow on a seperate thread
     thread1 = threading.Thread(target=record_flow, args=(camera, recorded_image_pointer), daemon=True) #daemon true, so if tkinter stops, it immediatly stops this thread
     thread1.start()
 
+
+
+
     ### THREAD main ###
-    # run image_taker flow on main thread
+    # run server flow on main thread
     # passing the pointer to images, so it can access it
     
     connect_to_server_flow(recorded_image_pointer)
