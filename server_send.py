@@ -2,7 +2,7 @@ import socket
 
 
 
-def main():
+def main(recieved_image_pointer):
     # 1. Create the socket
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
