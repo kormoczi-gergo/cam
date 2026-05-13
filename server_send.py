@@ -8,7 +8,7 @@ def main(recieved_image_pointer):
 
     # 2. Connect to the Server's IP
     # Replace '192.168.1.XX' with the actual IP of the Host laptop
-    client_socket.connect(('192.168.1.XX', 5005))
+    client_socket.connect(('192.168.0.44', 5005))
 
     # 3. Send data (Must be bytes!)
     message = "Motion Detected!"
