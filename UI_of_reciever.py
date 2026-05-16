@@ -27,7 +27,7 @@ def update_main_image(recieved_image_pointer, root, canvas):
         canvas.create_image(0, 0, image=photo, anchor="nw")
         canvas.image = photo # Essential reference to prevent garbage collection
 
-
+        recieved_image_pointer[1] += 1
         print(frame_counter)
 
     if root is not None:    # connect image updating to tkinter loop

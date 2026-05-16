@@ -27,3 +27,5 @@ def record_flow(cam, recorded_image_pointer):
         while True:
             recorded_image_pointer[0] = take_image(cam)
             recorded_image_pointer[1] += 1 #inc frame counter with every shot
+
+            print(recorded_image_pointer[1])
