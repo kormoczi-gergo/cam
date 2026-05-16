@@ -1,66 +1,9 @@
-import cv2      # image capturing
-import tkinter  # ui
+import cv2
 import threading# for multi threading
-from PIL import Image, ImageTk # for tasks with images
+
 import server_host_recieve # script that runs the server , recieves images, 1.arg: imagelise( first elements is changed to recieved image)
 
-
-frame_counter = 0
-
-
-
-###########################
-#     TKINTER UI          #
-###########################
-
-
-### DEFS FOR TKINTER
-def update_main_image(recieved_image_pointer, root, canvas):
-    global frame_counter
-
-    latest_image = recieved_image_pointer[0]
-
-    if latest_image is not None: # if image1 exists draw it on the canvas
-        # 1. Convert BGR to RGB
-        rgb_array = cv2.cvtColor(latest_image, cv2.COLOR_BGR2RGB)
-        # 2. Convert to PhotoImage
-        img = Image.fromarray(rgb_array)
-        photo = ImageTk.PhotoImage(image=img)
-
-        # 3. Update the canvas
-        canvas.create_image(0, 0, image=photo, anchor="nw")
-        canvas.image = photo # Essential reference to prevent garbage collection
-
-
-        print(frame_counter)
-        frame_counter += 1
-
-    if root is not None:    # connect image updating to tkinter loop
-        root.after(60, update_main_image, recieved_image_pointer, root, canvas) # 60 = 15fps
-
-
-##### MAIN TKINTER FLOW #####
-
-def tkinter_ui_flow(recieved_image_pointer):
-    ### UI ###
-    # 1. Initialize the main window
-    root = tkinter.Tk()
-
-    # 2. Set window properties
-    root.title("UI")
-    root.geometry("800x600")  # Width x Height
-
-
-    # 3. Add a Canvas (where your NumPy frames will eventually go)
-    # This keeps the UI structured for your specific goal
-    canvas = tkinter.Canvas(root, width=800, height=600, bg="white")
-    canvas.pack(fill="both", expand=True)
-
-
-    # 4. The Main Loop
-    # This is a blocking call that keeps the window open and responsive
-    update_main_image(recieved_image_pointer, root, canvas) # start update loop
-    root.mainloop()
+import UI_of_reciever
 
 
 
@@ -76,14 +19,9 @@ def tkinter_ui_flow(recieved_image_pointer):
 def host_server(recieved_image_pointer):
     server_host_recieve.main(recieved_image_pointer)
 
-
-
-
-
     
 
 def main():
-
 
     ### CAMERA OBJECT ###
     camera = cv2.VideoCapture(0)    # open default webcam (0)
@@ -94,7 +32,8 @@ def main():
 
 
     ### STRONING IMAGE/S IN ARRAY ###
-    recieved_image_pointer = [None]
+    #                          image(np arr)   |frame counter
+    recieved_image_pointer = [None,             0]
     #array so it is a pointer, and dinamically changes no matter the scope, [0]: main image
 
 
@@ -107,9 +46,7 @@ def main():
     ### THREAD main ###
     # run tkinter ui flow on main thread
     # passing the pointer to images, so it can access it
-    tkinter_ui_flow(recieved_image_pointer)
-
-
+    UI_of_reciever.tkinter_ui_flow(recieved_image_pointer)
 
 
 
