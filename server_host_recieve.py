@@ -3,12 +3,19 @@ import os
 import struct
 import numpy as np
 import cv2
-
+import sys #to check operating system
 def main(recorded_image_pointer: list):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    os.system("hostname -I") # starting output #print ip for reciever
-    os.system("ipconfig | findstr IPv4") #windows equivalent
+
+
+    if sys.platform.startswith("linux"):
+        print("os: linux")
+        os.system("hostname -I") # starting output #print ip for reciever
+
+    elif sys.platform.startswith("win32"):
+        print("os: windows")
+        os.system("ipconfig | findstr IPv4") #windows equivalent
 
 
 
