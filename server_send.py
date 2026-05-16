@@ -12,6 +12,9 @@ def main(recieved_image_pointer):
     ip_address = input("address of computer:")
     client_socket.connect((ip_address, 5005))
 
+
+    recieved_image_pointer[1] = True #so camera will know that conn establised, and start recording
+
     # 3. Send data 
     while True:
         frame = recieved_image_pointer[0] #get most recent photo done by camera
