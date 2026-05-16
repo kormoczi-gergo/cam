@@ -25,7 +25,10 @@ def record_flow(cam, recorded_image_pointer):
         # cam is the object that takes photos
         # image1 is inputted so it can be changed
         while True:
-            recorded_image_pointer[0] = take_image(cam)
-            recorded_image_pointer[1] += 1 #inc frame counter with every shot
+            
+            if recorded_image_pointer[1]: # if connection established
 
-            print(recorded_image_pointer[1])
+                recorded_image_pointer[0] = take_image(cam)
+                recorded_image_pointer[2] += 1 #inc frame counter with every shot
+
+                print(recorded_image_pointer[2])
