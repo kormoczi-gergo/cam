@@ -7,7 +7,11 @@ import cv2
 def main(recorded_image_pointer: list):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    os.system("hostname -I") # starting output
+    os.system("hostname -I") # starting output #print ip for reciever
+    os.system("ipconfig | findstr IPv4") #windows equivalent
+
+
+
 
     #listen to any incoming connection
     server_socket.bind(('0.0.0.0', 5005)) 

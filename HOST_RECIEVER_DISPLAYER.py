@@ -8,10 +8,6 @@ import UI_of_reciever
 
 
 
-
-
-
-
 #################
 #  SERVER FLOW  #
 #################
