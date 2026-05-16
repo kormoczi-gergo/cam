@@ -1,6 +1,5 @@
 import cv2      # image capturing
 import tkinter  # ui
-import time
 import threading# for multi threading
 from PIL import Image, ImageTk # for tasks with images
 import server_host_recieve # script that runs the server , recieves images, 1.arg: imagelise( first elements is changed to recieved image)

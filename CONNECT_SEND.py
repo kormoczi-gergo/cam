@@ -3,8 +3,10 @@ import tkinter  # ui
 import time
 import threading# for multi threading
 from PIL import Image, ImageTk # for tasks with images
-import socket
 import server_send
+
+
+import record_frame
 
 
 
@@ -13,24 +15,7 @@ frame_counter = 0
 
 
 
-###########################
-#   IMAGE TAKING          #
-###########################
 
-### TAKE IMAGE ###
-def take_image(cam):
-        # shoot a photo
-        # frame is a numpy array of bgr of each pixel
-        ret, frame = cam.read()    
-        return frame
-
-
-##### MAIN IMAGE RECORDING FLOW #####
-def record_flow(cam, recorded_image_pointer):
-        # cam is the object that takes photos
-        # image1 is inputted so it can be changed
-        while True:
-            recorded_image_pointer[0] = take_image(cam)
 
 
 
@@ -79,7 +64,7 @@ def main():
 
     ### THREAD 1 ###
     # run image_recording flow on a seperate thread
-    thread1 = threading.Thread(target=record_flow, args=(camera, recorded_image_pointer), daemon=True) #daemon true, so if tkinter stops, it immediatly stops this thread
+    thread1 = threading.Thread(target=record_frame.record_flow, args=(camera, recorded_image_pointer), daemon=True) #daemon true, so if tkinter stops, it immediatly stops this thread
     thread1.start()
 
 
