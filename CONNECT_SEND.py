@@ -56,8 +56,10 @@ def main():
 
 
     ### STRONING IMAGE/S IN ARRAY ###
-    recorded_image_pointer = [None]
+    #                          image(np arr)   |frame counter
+    recieved_image_pointer = [None,             0]
     #array so it is a pointer, and dinamically changes no matter the scope, [0]: main image
+
 
 
 
